@@ -1,45 +1,13 @@
 const express = require("express");
 let products = require("./data");
-const router = require("./apis/products/routes");
 const connectDB = require("./database");
+const productsRouter = require("./apis/products/routes");
 const app = express();
 
-app.use(express.json()); //to teach express how to read json
-app.use(`/api/products`, router);
+app.use(express.json()); //to teach express how to read json that come from the body of frontEnd requests, without this command express cannot read any req come from "postman" Or any clinet, the languge for communication between applications is "jason"
+app.use(`/api/products`, productsRouter); // to teach express how to read the routes that we just made in routes.js with name "productsRoutes" // "/api/products" found  in every path for products so i put it before "productsRoutes" to continue the path
 connectDB();
-// app.get("/api/products", (req, res) => {
-//   return res.json(products);
-// });
-// // to get one product
-// app.get(`/api/products/:id`, (req, res) => {
-//   const id = req.params.id;
-//   const products = products.find((product) => {
-//     return product.id == id;
-//   });
-//   if (product) {
-//     return res.json(product);
-//   } else {
-//     return res, json("there is no product with this id");
-//   }
-// });
-// // to add one product
-// app.post("/api/products", (req, res) => {
-//   products.push(req.body); //if i didnt write app.use(express.json() he cannot read the body that come from postman)
-//   return res.json(products);
-// });
-// // do delete one product
-// app.delete(`/api/products/:id`, (req, res) => {
-//   const id = req.params.id;
-//   products = products.filter((product) => {
-//     if (id !== product.id) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   });
-//   return res.json(products);
-// });
 
 app.listen(8000, () => {
   console.log("this is my first express project!!!");
-});
+}); //let the app listen on port 8000

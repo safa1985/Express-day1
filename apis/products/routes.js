@@ -5,11 +5,11 @@ const {
   addOneProduct,
   deleteOneProduct,
 } = require("./controllers");
-const router = express.Router();
+const productsRouter = express.Router(); // this router is for products to know the path to reach to any req for a product
 
-router.get(`/`, getAllProducts);
-router.get(`/:id`, getOneProduct);
-router.post(`/`, addOneProduct);
-router.delete(`/:id`, deleteOneProduct);
+productsRouter.get(`/`, getAllProducts);
+productsRouter.get(`/:id`, getOneProduct);
+productsRouter.post(`/`, addOneProduct);
+productsRouter.delete(`/:id`, deleteOneProduct);
 
-module.exports = router;
+module.exports = productsRouter;

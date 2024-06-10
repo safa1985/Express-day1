@@ -23,14 +23,14 @@ const addOneProduct = (req, res) => {
 
 const deleteOneProduct = (req, res) => {
   const id = req.params.id;
-  const productx = products.filter((product) => {
-    if (id !== product.id) {
+  const deletedProduct = products.filter((product) => {
+    if (id != product.id) {
       return true;
     } else {
       return false;
     }
   });
-  return res.json(productx);
+  return res.json(deletedProduct);
 };
 
 // GiCy7aa3zW4Ds8Da
