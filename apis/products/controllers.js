@@ -1,12 +1,16 @@
 const products = require("../../data");
 const Product = require("../../models/Product");
 
-const getAllProducts = async (req, res) => {
-  const products = await Product.find();
-  return res.json(products);
+const getAllProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find();
+    return res.json(products);
+  } catch (error) {
+    return next(error);
+  }
 };
 
-const getOneProduct = async (req, res) => {
+const getOneProduct = async (req, res, next) => {
   const id = req.params.id;
   try {
     const product = await Product.findById(id);
@@ -17,7 +21,7 @@ const getOneProduct = async (req, res) => {
         .status(400)
         .json({ meg: "Product with this id is not found!!" });
   } catch (error) {
-    return res.status(error.status || 500).json(error);
+    next(error);
   }
   // const product = products.find((product) => {
   //   return product.id == id;
@@ -29,21 +33,21 @@ const getOneProduct = async (req, res) => {
   //}
 };
 
-const createOneProduct = async (req, res) => {
+const createOneProduct = async (req, res, next) => {
   try {
     const nemProduct = await Product.create(req.body); //if i didnt write app.use(express.json() he cannot read the body that come from postman)
     return res.status(201).json(nemProduct);
   } catch (error) {
-    return res.status(error.status || 500).json(error);
+    next(error);
   }
 };
 
-const deleteOneProduct = async (req, res) => {
+const deleteOneProduct = async (req, res, next) => {
   try {
     const id = req.params.id;
     await Product.findByIdAndDelete(id);
   } catch (error) {
-    return res.status(error.status || 500).json(error);
+    next(error);
   }
 
   //const deletedProduct = products.filter((product) => {
@@ -57,13 +61,13 @@ const deleteOneProduct = async (req, res) => {
   return res.status(200).json({ meg: "product deleted succsessfully" });
 };
 
-const updateProduct = async (req, res) => {
+const updateProduct = async (req, res, next) => {
   const id = req.params.id;
   try {
     const updated = await Product.findByIdAndUpdate(id, req.body);
     return res.status(200).json(updated);
   } catch (error) {
-    return res.status(error.status || 500).json(error);
+    next(error);
   }
 };
 // GiCy7aa3zW4Ds8Da
