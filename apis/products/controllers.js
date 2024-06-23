@@ -38,8 +38,8 @@ const createOneProduct = async (req, res, next) => {
     if (req.file) {
       req.body.image = req.file.path;
     }
-    const nemProduct = await Product.create(req.body); //if i didnt write app.use(express.json() he cannot read the body that come from postman)
-    return res.status(201).json(nemProduct);
+    const newProduct = await Product.create(req.body); //if i didnt write app.use(express.json() he cannot read the body that come from postman)
+    return res.status(201).json(newProduct);
   } catch (error) {
     next(error);
   }
